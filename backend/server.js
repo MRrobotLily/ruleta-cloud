@@ -8,26 +8,23 @@ app.use(express.json());
 
 let resultados = [];
 
-app.post('/guardar', (req,res)=>{
+app.post('/guardar', (req, res) => {
 
     resultados.push(req.body);
 
     console.log(resultados);
 
     res.json({
-        mensaje:"resultado guardado"
+        mensaje: "resultado guardado"
     });
-
 });
 
-app.get('/resultados',(req,res)=>{
-
+app.get('/resultados', (req, res) => {
     res.json(resultados);
-
 });
 
-app.listen(3001, ()=>{
+const PORT = process.env.PORT || 3001;
 
-    console.log("Servidor corriendo");
-
+app.listen(PORT, () => {
+    console.log("Servidor corriendo en puerto " + PORT);
 });
