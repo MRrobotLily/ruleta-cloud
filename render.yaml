@@ -1,0 +1,5 @@
+services:
+  - type: web
+    name: ruleta-cloud
+    runtime: docker
+    rootDir: backend
