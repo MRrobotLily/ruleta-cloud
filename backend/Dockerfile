@@ -2,22 +2,20 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# 1. Copiar los archivos de configuración del backend
+# 1. Copiar archivos de dependencias del backend
 COPY package*.json ./
-
-# 2. Instalar dependencias
 RUN npm install
 
-# 3. Copiar todo el código del backend actual
+# 2. Copiar todo el contenido del backend
 COPY . .
 
-# 4. Crear la carpeta 'public' manualmente dentro del contenedor
+# 3. Crear la carpeta pública si no existe
 RUN mkdir -p public
 
-# 5. Descargar tu index.html directamente desde tu propio GitHub para no renegar con carpetas padres
-ADD https://raw.githubusercontent.com/MRobotLily/ruleta-cloud/main/frontend/index.html ./public/index.html
+# 4. En lugar de buscar carpetas padres complicadas, 
+# Render descarga todo el repositorio en el contenedor durante la construcción.
+# Buscamos el index.html en la raíz del espacio de trabajo de Render:
+COPY ../frontend/index.html ./public/index.html
 
-# 6. Exponer el puerto de Render
 EXPOSE 10000
-
 CMD ["node", "server.js"]
